@@ -1,0 +1,43 @@
+{
+  "name": "split-swagger",
+  "version": "1.0.0",
+  "description": "Split swagger splits a swagger file by certaing properties, this is useful when using swashbuckle and you want to split by controllers",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node_modules/.bin/tsc",
+    "run-js": "node_modules/.bin/tsc && node ./dist/main.js s ../swagger_samples/swagger.json ./output",
+    "run-ts": "ts-node ./src/main.ts s ./swagger_samples/swagger.json ./output",
+    "run-g": "split-swagger s C:/Users/AK/Documents/DEV/split-swagger/swagger_samples/swagger.json C:/Users/AK/Documents/DEV/split-swagger/output",
+    "run-g-r": "split-swagger s ./swagger_samples/swagger.json ./output",
+    "prepublishOnly": "node_modules/.bin/tsc"
+  },
+  "preferGlobal": true,
+  "bin": "./dist/main.js",
+  "repository": {
+    "type": "git",
+    "url": "\"\""
+  },
+  "keywords": [
+    "swagger",
+    "split",
+    "swashbuckle",
+    "cli",
+    "nodejs",
+    "typescript"
+  ],
+  "author": "Ali Khashan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/node": "^11.11.1",
+    "typescript": "^3.3.1"
+  },
+  "dependencies": {
+    "commander": "^2.19.0",
+    "chalk": "^2.4.2"
+  }
+}
