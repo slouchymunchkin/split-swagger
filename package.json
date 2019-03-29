@@ -24,10 +24,7 @@
   "keywords": [
     "swagger",
     "split",
-    "swashbuckle",
-    "cli",
-    "nodejs",
-    "typescript"
+    "swashbuckle"
   ],
   "author": "Ali Khashan",
   "license": "MIT",
