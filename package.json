@@ -1,7 +1,7 @@
 {
   "name": "split-swagger",
   "version": "1.0.0",
-  "description": "Split swagger splits a swagger file by certaing properties, this is useful when using swashbuckle and you want to split by controllers",
+  "description": "Split swagger files by Tag prop",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
@@ -19,7 +19,7 @@
   "bin": "./dist/main.js",
   "repository": {
     "type": "git",
-    "url": "\"\""
+    "url": "https://github.com/slouchymunchkin/split-swagger"
   },
   "keywords": [
     "swagger",
