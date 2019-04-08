@@ -4,7 +4,6 @@ var fs = require("fs");
 var path = require("path");
 var chalk_1 = require("chalk");
 var splitSwagger = function (swaggerFile, outputPath) {
-    var swaggerJson;
     var resolvedSwaggerPath = path.resolve(swaggerFile);
     var resolvedOutputPath = path.resolve(outputPath);
     console.log(chalk_1.default.red("\n"));
@@ -12,15 +11,13 @@ var splitSwagger = function (swaggerFile, outputPath) {
         console.log(chalk_1.default.red("Cannot find swagger file " + resolvedSwaggerPath));
         return;
     }
-    else if (!directoryExists(resolvedOutputPath)) {
+    if (!directoryExists(resolvedOutputPath)) {
         console.log(chalk_1.default.red("Cannot find output directory " + resolvedOutputPath));
         return;
     }
-    else {
-        console.log(chalk_1.default.magentaBright("Swagger file path: " + resolvedSwaggerPath));
-        console.log(chalk_1.default.magentaBright("Output path: " + resolvedOutputPath + " \n"));
-        swaggerJson = require(path.resolve(swaggerFile));
-    }
+    console.log(chalk_1.default.magentaBright("Swagger file path: " + resolvedSwaggerPath));
+    console.log(chalk_1.default.magentaBright("Output path: " + resolvedOutputPath + " \n"));
+    var swaggerJson = require(path.resolve(swaggerFile));
     var paths = swaggerJson.paths;
     var swaggerWOPathProp = {};
     Object.keys(swaggerJson).forEach(function (key) {
