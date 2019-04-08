@@ -14,16 +14,5 @@
     "removeComments": true,
     "pretty": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    "example",
-    "lib",
-    "dist"
-  ]
+  "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts", "example", "lib", "dist", "slask"]
 }
