@@ -9,10 +9,9 @@
   ],
   "scripts": {
     "build": "node_modules/.bin/tsc",
-    "run-js": "node_modules/.bin/tsc && node ./dist/main.js s ../swagger_samples/swagger.json ./output",
-    "run-ts": "ts-node ./src/main.ts s ./swagger_samples/swagger.json ./output",
-    "run-g": "split-swagger s C:/Users/AK/Documents/DEV/split-swagger/swagger_samples/swagger.json C:/Users/AK/Documents/DEV/split-swagger/output",
-    "run-g-r": "split-swagger s ./swagger_samples/swagger.json ./output",
+    "run-js": "node_modules/.bin/tsc && node ./dist/main.js s ./test/swagger.json ./output",
+    "run-ts": "ts-node ./src/main.ts s ./test/swagger.json ./output",
+    "run-g-r": "split-swagger s ./test/swagger.json ./output",
     "prepublishOnly": "node_modules/.bin/tsc"
   },
   "preferGlobal": true,

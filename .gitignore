@@ -5,3 +5,4 @@ npm-debug.log*
 output
 swagger_samples
 slask
+dist
