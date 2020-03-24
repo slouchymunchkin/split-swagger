@@ -1,4 +1,3 @@
-// const fs = require("fs");
 import * as fs from "fs";
 import * as path from "path";
 import chalk from "chalk";
@@ -35,12 +34,7 @@ const splitSwagger = (swaggerFile: string, outputPath: string) => {
   const paths = swaggerJson.paths;
 
   /** Creates a copy of the swagger json tree without the path prop */
-  let swaggerWOPathProp: any = {};
-  Object.keys(swaggerJson).forEach(key => {
-    if (key !== "paths") {
-      swaggerWOPathProp[key] = swaggerJson[key];
-    }
-  });
+  const { paths: _, ...swaggerWOPathProp } = swaggerJson;
 
   /**
    * Goes through the Path prop tree containing operations,
@@ -56,41 +50,33 @@ const splitSwagger = (swaggerFile: string, outputPath: string) => {
    *  }
    * }
    */
-  let groupedOperations: any = {};
+
+  /** Create a map to group operations per tag */
+  let groupedOperations = new Map<string, unknown>();
+
   Object.keys(paths).forEach(operationKey => {
     const operationValue = paths[operationKey];
     Object.keys(operationValue).forEach(httpMethod => {
       const operationParamsValue = operationValue[httpMethod];
       const tag = operationParamsValue.tags[0];
 
-      let operations: any = groupedOperations[tag];
-      if (operations) {
-        operations[operationKey] = operationValue;
-        groupedOperations[tag] = operations;
-      } else {
-        /**
-         * Using [] here, called ComputedPropertyName syntax because we want the value of operationNameKey to be the property name
-         * Otherwise the property name will be the variables name
-         */
-        groupedOperations[tag] = { [operationKey]: operationValue };
-      }
+      groupedOperations.set(tag, { ...(groupedOperations.get(tag) || {}), [operationKey]: operationValue });
     });
   });
 
   /** Adds the remaining swagger props and creates a file for each tag operations */
-  for (const key in groupedOperations) {
-    let splitSwaggerComplete: any = swaggerWOPathProp;
-    if (groupedOperations.hasOwnProperty(key)) {
-      const element = groupedOperations[key];
-      splitSwaggerComplete["paths"] = element;
-      fs.writeFile(`${outputPath}/${key}.json`, JSON.stringify(splitSwaggerComplete), function(err: NodeJS.ErrnoException) {
-        if (err) {
-          return console.log(chalk.red(err.message));
-        }
-        console.log(chalk.green(`Swagger file ${key}.json was successfully created at ${outputPath}`));
-      });
-    }
-  }
+  groupedOperations.forEach((element, key) => {
+    // Break the object reference, so that we may mutate with impunity
+    const swaggerOutput = JSON.parse(JSON.stringify(swaggerWOPathProp));
+    swaggerOutput.tags = swaggerOutput.tags.filter((tag: { name: string }) => tag.name === key);
+    swaggerOutput["paths"] = element;
+    fs.writeFile(`${outputPath}/${key}.json`, JSON.stringify(swaggerOutput, null, 2), function(err: NodeJS.ErrnoException) {
+      if (err) {
+        return console.log(chalk.red(err.message));
+      }
+      console.log(chalk.green(`Swagger file ${key}.json was successfully created at ${outputPath}`));
+    });
+  });
 };
 
 const directoryExists = (filePath: string) => {
